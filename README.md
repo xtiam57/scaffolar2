@@ -18,7 +18,7 @@ Scaffolar contains a sample AngularJS application and is preconfigured to instal
 
 ### Developing
 
-1. Run `npm install` to install server dependencies.
+1. Run `npm install` to install node dependencies.
 
 2. Run `bower install` to install front-end dependencies.
 
