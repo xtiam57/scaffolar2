@@ -48,10 +48,9 @@ gulp.task('scripts', function() {
     .pipe(plugins.plumber())
     // .pipe($.jshint())
     // .pipe($.jshint.reporter('jshint-stylish'))
-
     .pipe(plugins.if(settings.isDevelopment, plugins.sourcemaps.init()))
     .pipe(plugins.concat('app.js', {newLine:'\n'}))
-    .pipe(plugins.if(settings.isDistribution, plugins.babel({presets:['es2015']})))
+    .pipe(plugins.if(settings.isDistribution, plugins.babel()))
     .pipe(plugins.if(settings.isDistribution, plugins.ngAnnotate()))
     .pipe(plugins.if(settings.isDistribution, plugins.uglify({preserveComments:'some'})))
     .pipe(plugins.if(settings.isDevelopment, plugins.sourcemaps.write('../maps', {includeContent:false, sourceRoot:'/' })))
@@ -85,6 +84,7 @@ gulp.task('sass', function() {
     .pipe(plugins.autoprefixer())
     .pipe(plugins.if(settings.isDistribution, plugins.csso()))
     .pipe(plugins.rename('styles.css'))
+    .pipe(plugins.if(settings.isDistribution, plugins.replace('../../bower_components/bootstrap-sass/assets/fonts/bootstrap', '../fonts')))
     .pipe(plugins.if(settings.isDistribution, plugins.rev()))
     .pipe(gulp.dest('dist/css'))
     .pipe(plugins.if(settings.isDistribution, plugins.rev.manifest('styles.json')))
@@ -98,7 +98,7 @@ gulp.task('vendors', function() {
   return gulp.src('src/vendors/**/*.js')
     .pipe(plugins.plumber())
     .pipe(plugins.concat('vendors.js', {newLine:'\n'}))
-    .pipe(plugins.if(settings.isDistribution, plugins.babel({presets:['es2015']})))
+    .pipe(plugins.if(settings.isDistribution, plugins.babel()))
     .pipe(plugins.if(settings.isDistribution, plugins.uglify({preserveComments:'some'})))
     .pipe(plugins.if(settings.isDistribution, plugins.rev()))
     .pipe(gulp.dest('dist/js'))
@@ -164,10 +164,17 @@ gulp.task('bower-fonts', function() {
 
 // Index.html
 // Move and minify index.html
-gulp.task('move-index', function() {
+gulp.task('move-index', ['move-robots'], function() {
   return gulp.src('src/index.html')
     .pipe(plugins.plumber())
     // .pipe(plugins.htmlmin({removeComments:true, conservativeCollapse:true, collapseWhitespace:true}))
+    .pipe(gulp.dest('dist/'));
+});
+
+// Move robots
+gulp.task('move-robots', function() {
+  return gulp.src('src/robots.txt')
+    .pipe(plugins.plumber())
     .pipe(gulp.dest('dist/'));
 });
 

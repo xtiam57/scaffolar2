@@ -1,3 +1,14 @@
+// Redirecting to development path
+$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+
+// to avoid stranges urls
+$bootstrap-sass-asset-helper: false;
+
+// Importing bootstrap
+@import '../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap';
+
+
+
 // Component styles are injected through gulp
 /* inject:scss */
 @import '../styles/scaffolding';
@@ -7,7 +18,6 @@
 
 
 // Specific app styles
-
 $color: red;
 
 body {

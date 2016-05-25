@@ -7,53 +7,26 @@ This project is an application skeleton for a typical AngularJS web app. You can
 
 Scaffolar contains a sample AngularJS application and is preconfigured to install the Angular framework and a bunch of development and testing tools for instant web development gratification.
 
-Scaffolar doesn't do much, just shows how to wire two controllers and views together.
-
 ## Getting Started
-
-To get you started you can simply clone the Scaffolar repository and install the dependencies:
 
 ### Prerequisites
 
-You need git to clone the Scaffolar repository.
+- [Git](https://git-scm.com/)
+- [Node.js and npm](nodejs.org) Node ^4.2.3, npm ^2.14.7
+- [Bower](bower.io) (`npm install --global bower`)
+- [Gulp](http://gulpjs.com/) (`npm install --global gulp`)
 
-We also use a number of node.js tools to initialize Scaffolar. You must have node.js and
-its package manager (npm) installed.  You can get them from [http://nodejs.org/](http://nodejs.org/).
+### Developing
 
-### Install
+1. Run `npm install` to install server dependencies.
 
-Clone the Scaffolar repository using Git:
+2. Run `bower install` to install front-end dependencies.
 
-```sh
-$ git clone https://github.com/xtiam57/scaffolar
-$ cd scaffolar
-```
-Then run:
+3. Run `gulp serve` to start the development server. It should automatically open the client in your browser when ready.
 
-```sh
-$ npm install
-$ bower install
-```
+## Build & development
 
-## Serve
-
-```sh
-$ gulp
-```
-Or
-```sh
-$ gulp serve
-```
-
-## Build
-
-```sh
-$ gulp build
-```
-Or
-```sh
-$ gulp build:serve
-```
+Run `grunt build` for building or `grunt build:serve` for building and preview.
 
 **Christiam Mena**
 
