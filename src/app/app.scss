@@ -1,0 +1,23 @@
+// Component styles are injected through gulp
+/* inject:scss */
+@import '../styles/scaffolding';
+@import 'main/main';
+@import '../components/navbar/navbar';
+/* endinject */
+
+
+// Specific app styles
+
+$color: red;
+
+body {
+  background-color: $color;
+  background-color: green;
+  // width: 100%;
+
+  p {
+    margin-top: 800px;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+}
