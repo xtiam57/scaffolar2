@@ -1,4 +1,4 @@
 angular.module('app')
-  .config(function() {
+  .config(() => {
     console.log('param!!!!!' + new Date());
   });

@@ -12,8 +12,8 @@ $bootstrap-sass-asset-helper: false;
 // Component styles are injected through gulp
 /* inject:scss */
 @import '../styles/scaffolding';
-@import 'main/main';
 @import '../components/navbar/navbar';
+@import 'main/main';
 /* endinject */
 
 

@@ -1,5 +1,5 @@
 angular.module('app')
-  .config(function($stateProvider) {
+  .config(($stateProvider) => {
     $stateProvider
       .state('main', {
         url: '/',
