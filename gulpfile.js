@@ -46,8 +46,10 @@ gulp.task('connect:build', function() {
 gulp.task('scripts', function() {
   return gulp.src('src/{app,components}/**/*.js')
     .pipe(plugins.plumber())
-    // .pipe($.jshint())
-    // .pipe($.jshint.reporter('jshint-stylish'))
+    .pipe(plugins.eslint())
+    // eslint.format() outputs the lint results to the console.
+    // Alternatively use eslint.formatEach() (see Docs).
+    .pipe(plugins.eslint.format())
     .pipe(plugins.if(settings.isDevelopment, plugins.sourcemaps.init()))
     .pipe(plugins.concat('app.js', {newLine:'\n'}))
     .pipe(plugins.if(settings.isDistribution, plugins.babel()))
@@ -57,7 +59,8 @@ gulp.task('scripts', function() {
     .pipe(plugins.if(settings.isDistribution, plugins.rev()))
     .pipe(gulp.dest('dist/js'))
     .pipe(plugins.if(settings.isDistribution, plugins.rev.manifest('app.json')))
-    .pipe(plugins.if(settings.isDistribution, gulp.dest('dist/revisions/')));
+    .pipe(plugins.if(settings.isDistribution, gulp.dest('dist/revisions/')))
+    .pipe(plugins.browserSync.reload());
 });
 
 
@@ -103,7 +106,8 @@ gulp.task('vendors', function() {
     .pipe(plugins.if(settings.isDistribution, plugins.rev()))
     .pipe(gulp.dest('dist/js'))
     .pipe(plugins.if(settings.isDistribution, plugins.rev.manifest('vendors.json')))
-    .pipe(plugins.if(settings.isDistribution, gulp.dest('dist/revisions/')));
+    .pipe(plugins.if(settings.isDistribution, gulp.dest('dist/revisions/')))
+    .pipe(plugins.browserSync.reload());
 });
 
 
@@ -206,12 +210,13 @@ gulp.task('useref', function() {
 gulp.task('assets', ['clean:assets'], function() {
   return gulp.src('src/assets/{images,fonts,icons,misc}/**/*')
     .pipe(plugins.plumber())
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('dist/'))
+    .pipe(plugins.browserSync.reload());
 });
 
 // Remove all temp assets
 gulp.task('clean:assets', function() {
-  return plugins.del([ 'dist/{images,fonts,icons,misc}' ]);
+  return plugins.del(['dist/{images,fonts,icons,misc}']);
 });
 
 
@@ -221,13 +226,11 @@ gulp.task('watch', function() {
   // Vendors
   plugins.watch(['src/vendors/**/*.js'], function() {
     gulp.start('vendors');
-    plugins.browserSync.reload();
   });
 
   // Scripts
   plugins.watch(['src/{app,components}/**/*.js'], function() {
     gulp.start('scripts');
-    plugins.browserSync.reload();
   });
 
   // Sass
@@ -244,7 +247,6 @@ gulp.task('watch', function() {
   // Assets
   plugins.watch(['src/assets/**/*'], function() {
     gulp.start(['assets']);
-    plugins.browserSync.reload();
   });
 
   // Gulp + Bower
@@ -256,12 +258,12 @@ gulp.task('watch', function() {
 
 // Clean
 gulp.task('clean', function() {
-  return plugins.del([ 'dist/' ]);
+  return plugins.del(['dist/']);
 });
 
 // Clean revisions folder
 gulp.task('clean:revisions', function() {
-  return plugins.del([ 'dist/revisions/' ]);
+  return plugins.del(['dist/revisions/']);
 });
 
 
