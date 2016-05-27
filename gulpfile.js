@@ -60,7 +60,7 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest('dist/js'))
     .pipe(plugins.if(settings.isDistribution, plugins.rev.manifest('app.json')))
     .pipe(plugins.if(settings.isDistribution, gulp.dest('dist/revisions/')))
-    .pipe(plugins.browserSync.reload());
+    .pipe(plugins.browserSync.stream());
 });
 
 
@@ -107,7 +107,7 @@ gulp.task('vendors', function() {
     .pipe(gulp.dest('dist/js'))
     .pipe(plugins.if(settings.isDistribution, plugins.rev.manifest('vendors.json')))
     .pipe(plugins.if(settings.isDistribution, gulp.dest('dist/revisions/')))
-    .pipe(plugins.browserSync.reload());
+    .pipe(plugins.browserSync.stream());
 });
 
 
@@ -211,7 +211,7 @@ gulp.task('assets', ['clean:assets'], function() {
   return gulp.src('src/assets/{images,fonts,icons,misc}/**/*')
     .pipe(plugins.plumber())
     .pipe(gulp.dest('dist/'))
-    .pipe(plugins.browserSync.reload());
+    .pipe(plugins.browserSync.stream());
 });
 
 // Remove all temp assets
