@@ -1,5 +1,7 @@
+(() => {
+
 class NavbarController {
-  constructor() {
+  constructor($scope, $rootScope) {
     this._menu = [{
       title: 'Home',
       state: 'main'
@@ -12,3 +14,5 @@ class NavbarController {
 
 angular.module('app')
   .controller('NavbarController', NavbarController);
+
+})();

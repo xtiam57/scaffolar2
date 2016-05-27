@@ -1,17 +1,14 @@
-(function() {
+(() => {
 
 class MainController {
 
-  constructor($http) {
-    this.$http = $http;
+  constructor(RESTful) {
+    this.RESTful = RESTful;
     this.awesomeThings = [];
   }
 
   $onInit() {
-    // this.$http.get('/api/things').then((response) => {
-    //   this.awesomeThings = response.data;
-    //   console.log('param');
-    // });
+    console.log('onInit controller');
   }
 }
 
