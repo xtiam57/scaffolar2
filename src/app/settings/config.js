@@ -1,5 +1,5 @@
 angular.module('app')
-  .config(($logProvider, $locationProvider, /*$mdThemingProvider, API, APP_INFO, RESTfulProvider, PageServiceProvider,*/ $provide) => {
+  .config(($logProvider, $locationProvider, $provide) => {
     // Log configuration
     $logProvider.debugEnabled(true);
 
@@ -11,12 +11,6 @@ angular.module('app')
       }
       return $delegate;
     }]);
-
-    // Base URL
-    // RESTfulProvider.setBaseUrl(API.url);
-
-    // Base Title
-    // PageServiceProvider.setBaseTitle(APP_INFO.name);
 
     // Setting this property to true will elimate the # from all URLs
     $locationProvider.html5Mode(false);

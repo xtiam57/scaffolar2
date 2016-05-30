@@ -1,16 +1,16 @@
 angular.module('app')
   .run(($rootScope, $http, $log, $window) => {
     // Checking internet connection
-    $rootScope.online = navigator.onLine;
+    $rootScope.isOnline = navigator.onLine;
     $window.addEventListener('offline', () => {
       $rootScope.$apply(() => {
-        $rootScope.online = false;
+        $rootScope.isOnline = false;
       });
     }, false);
 
     $window.addEventListener('online', () => {
       $rootScope.$apply(() => {
-        $rootScope.online = true;
+        $rootScope.isOnline = true;
       });
     }, false);
   });

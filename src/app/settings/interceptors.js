@@ -3,12 +3,10 @@ angular.module('app')
     $httpProvider.interceptors.push(['$q', '$location', ($q, $location) => {
       return {
         request: (config) => {
-          // $log.info(config);
           return config || $q.when(config);
         },
 
         response: (response) => {
-          // $log.info(response);
           return response || $q.when(response);
         },
 

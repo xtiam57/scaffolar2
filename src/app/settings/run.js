@@ -1,11 +1,5 @@
 angular.module('app')
-  .run(($rootScope, $log/*, PageService, APP_INFO*/) => {
-    // Setting app version
-    // $rootScope.APP_INFO = APP_INFO;
-
-    // To access the $log service in HTML
-    $rootScope.$log = $log;
-
+  .run(($rootScope, PageService) => {
     // Broadcasted before a route change. At this point the route services starts
     // resolving all of the dependencies needed for the route change to occur.
     // Typically this involves fetching the view template as well as any dependencies defined
@@ -21,7 +15,7 @@ angular.module('app')
     // for the directive to instantiate the controller and render the view.
     $rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
       // Setting page properties
-      // PageService.get();
+      PageService.get();
     });
 
 
@@ -31,7 +25,8 @@ angular.module('app')
     });
 
 
-    // Fired when a requested state cannot be found using the provided state name during transition. The event is broadcast allowing any handlers a single chance to deal with the error (usually by lazy-loading the unfound state).
+    // Fired when a requested state cannot be found using the provided state name during transition. The event is broadcast
+    // allowing any handlers a single chance to deal with the error (usually by lazy-loading the unfound state).
     $rootScope.$on('$stateNotFound', (event, unfoundState, fromState, fromParams) => {
 
     });

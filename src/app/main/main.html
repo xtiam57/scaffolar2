@@ -1,14 +1,18 @@
-<header class="jumbotron" id="banner">
-  <div class="container">
-    <h1>Hello there!</h1>
-    <p class="lead">Kick-start your next web app with Scaffolar</p>
-  </div>
-</header>
-
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
+      <header class="jumbotron">
+        <h1>{{ main.greetings | available }}</h1>
+        <p class="lead">Kick-start your next web app with Scaffolar</p>
+      </header>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis culpa provident sit nulla explicabo sed, impedit aut enim neque quam praesentium corporis voluptate dolores, voluptas totam deleniti, possimus magni! Similique.</p>
+
+      <button class="btn btn-primary">Button</button>
     </div>
   </div>
 </div>

@@ -35,10 +35,10 @@ class RESTful {
     }
 
     this._$http.get(this._createUrl(endpoint, queryStrings))
-      .success(function(response, status, headers, config) {
+      .success((response, status, headers, config) => {
         deferred.resolve(response);
       })
-      .error(function(response, status, headers, config) {
+      .error((response, status, headers, config) => {
         deferred.reject(response);
       });
 
@@ -64,10 +64,10 @@ class RESTful {
     }
 
     this._$http.post(this._createUrl(endpoint, queryStrings), payload)
-      .success(function(response, status, headers, config) {
+      .success((response, status, headers, config) => {
         deferred.resolve(response);
       })
-      .error(function(response, status, headers, config) {
+      .error((response, status, headers, config) => {
         deferred.reject(response);
       });
 
@@ -93,10 +93,10 @@ class RESTful {
     }
 
     this._$http.put(this._createUrl(endpoint, queryStrings), payload)
-      .success(function(response, status, headers, config) {
+      .success((response, status, headers, config) => {
         deferred.resolve(response);
       })
-      .error(function(response, status, headers, config) {
+      .error((response, status, headers, config) => {
         deferred.reject(response);
       });
 
@@ -117,16 +117,15 @@ class RESTful {
     }
 
     this._$http.delete(this._createUrl(endpoint, queryStrings))
-      .success(function(response, status, headers, config) {
+      .success((response, status, headers, config) => {
         deferred.resolve(response);
       })
-      .error(function(response, status, headers, config) {
+      .error((response, status, headers, config) => {
         deferred.reject(response);
       });
 
     return deferred.promise;
   };
-
 }
 
 angular.module('app')

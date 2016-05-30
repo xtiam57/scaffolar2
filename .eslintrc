@@ -18,6 +18,9 @@
     "window": true,
     "document": true,
     "navigator": true,
+    "Ratio": true,
+    "performance": true,
+    "s": true,
   },
   "rules": {
     "quotes": [1, "single"],

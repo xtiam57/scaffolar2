@@ -38,14 +38,14 @@ angular.module('app')
      * The environment to be used. Options: testing|distribution
      * @type {String}
      */
-    _environment: '_testing',
+    _environment: 'testing',
 
     /**
      * Testing and distribution configuration
      * NOTE: DO NOT TOUCH THIS IN RUNNING TIME
      * @type {Object}
      */
-    _testing: {
+    testing: {
       version  : '',
       port     : '',
       protocol : 'http',
@@ -58,7 +58,7 @@ angular.module('app')
      * @return {String}
      */
     get url() {
-      let api = this[this._environment] ? this[this._environment] : this._testing;
+      let api = this[this.environment] ? this[this.environment] : this.testing;
 
       return api.protocol + '://' +
              api.host +
