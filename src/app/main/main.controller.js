@@ -1,12 +1,12 @@
 (() => {
 
 class MainController {
-  constructor(RESTful, CacheService, MainService) {
+  constructor(RESTful, StorageService, MainService) {
     this.RESTful = RESTful;
     this.greetings = MainService.greeting('Scaffolar');
 
-    CacheService.put('myKey', 1999);
-    // console.log(CacheService.info());
+    StorageService.put('myKey', 1999);
+    // console.log(StorageService.info());
   };
 
   $onInit() {

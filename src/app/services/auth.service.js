@@ -1,38 +1,43 @@
 (() => {
 
-let Auth = (RESTful, $q, $timeout) => ({
+class Auth {
+  constructor(RESTful, $q, $timeout) {
+    this.$q = $q;
+    this.$timeout = $timeout;
+  }
+
   login(credentials) {
     // code
-  },
+  }
 
   logout() {
     // code
-  },
+  }
 
   getSession() {
     // code
-  },
+  }
 
   destroy() {
     // code
-  },
+  }
 
   getToken() {
     // code
-  },
+  }
 
   checkSession() {
-    let deferred = $q.defer();
+    let deferred = this.$q.defer();
 
-    $timeout(() => {
+    this.$timeout(() => {
       deferred.resolve();
     }, 500);
 
     return deferred.promise;
-  },
-});
+  }
+};
 
 angular.module('app')
-  .factory('Auth', Auth);
+  .service('Auth', Auth);
 
 })();

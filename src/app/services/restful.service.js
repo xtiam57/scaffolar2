@@ -1,13 +1,22 @@
 (() => {
 
-let RESTful = (API, $http, $q) => ({
-  _url: API.url,
+class RESTful {
+  constructor(API, $http, $q) {
+    this._url = API.url;
+    this.$http = $http;
+    this.$q = $q;
+  }
 
   // Getters and Setters
-  set url(url) { this._url = url; },
-  get url() { return this._url; },
+  set url(url) { this._url = url; }
+  get url() { return this._url; }
 
-  // Methods
+  /**
+   * Create a valid url using the API constant
+   * @param  {String} endpoint
+   * @param  {Object} queryStrings
+   * @return {String}
+   */
   _createUrl(endpoint, queryStrings) {
     // Has query strings?
     if (queryStrings && !_.isEmpty(queryStrings)) {
@@ -15,7 +24,7 @@ let RESTful = (API, $http, $q) => ({
       endpoint += jQuery.param(queryStrings);
     }
     return this._url + endpoint;
-  },
+  }
 
   /**
    * GET
@@ -24,22 +33,22 @@ let RESTful = (API, $http, $q) => ({
    * @return {Promise}
    */
   get(endpoint, queryStrings) {
-    let deferred = $q.defer();
+    let deferred = this.$q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
     }
 
-    $http.get(this._createUrl(endpoint, queryStrings))
+    this.$http.get(this._createUrl(endpoint, queryStrings))
       .success((response, status, headers, config) => {
-        deferred.resolve(response);
+        deferred.resolve(response, status, headers, config);
       })
       .error((response, status, headers, config) => {
-        deferred.reject(response);
+        deferred.reject(response, status, headers, config);
       });
 
     return deferred.promise;
-  },
+  }
 
   /**
    * POST
@@ -49,7 +58,7 @@ let RESTful = (API, $http, $q) => ({
    * @return {Promise}
    */
   post(endpoint, payload, queryStrings) {
-    let deferred = $q.defer();
+    let deferred = this.$q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
@@ -59,16 +68,16 @@ let RESTful = (API, $http, $q) => ({
       payload = {};
     }
 
-    $http.post(this._createUrl(endpoint, queryStrings), payload)
+    this.$http.post(this._createUrl(endpoint, queryStrings), payload)
       .success((response, status, headers, config) => {
-        deferred.resolve(response);
+        deferred.resolve(response, status, headers, config);
       })
       .error((response, status, headers, config) => {
-        deferred.reject(response);
+        deferred.reject(response, status, headers, config);
       });
 
     return deferred.promise;
-  },
+  }
 
   /**
    * PUT
@@ -78,7 +87,7 @@ let RESTful = (API, $http, $q) => ({
    * @return {Promise}
    */
   put(endpoint, payload, queryStrings) {
-    let deferred = $q.defer();
+    let deferred = this.$q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
@@ -88,16 +97,16 @@ let RESTful = (API, $http, $q) => ({
       payload = {};
     }
 
-    $http.put(this._createUrl(endpoint, queryStrings), payload)
+    this.$http.put(this._createUrl(endpoint, queryStrings), payload)
       .success((response, status, headers, config) => {
-        deferred.resolve(response);
+        deferred.resolve(response, status, headers, config);
       })
       .error((response, status, headers, config) => {
-        deferred.reject(response);
+        deferred.reject(response, status, headers, config);
       });
 
     return deferred.promise;
-  },
+  }
 
   /**
    * DELETE
@@ -106,25 +115,25 @@ let RESTful = (API, $http, $q) => ({
    * @return {Promise}
    */
   delete(endpoint, queryStrings) {
-    let deferred = $q.defer();
+    let deferred = this.$q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
     }
 
-    $http.delete(this._createUrl(endpoint, queryStrings))
+    this.$http.delete(this._createUrl(endpoint, queryStrings))
       .success((response, status, headers, config) => {
-        deferred.resolve(response);
+        deferred.resolve(response, status, headers, config);
       })
       .error((response, status, headers, config) => {
-        deferred.reject(response);
+        deferred.reject(response, status, headers, config);
       });
 
     return deferred.promise;
-  },
-});
+  }
+};
 
 angular.module('app')
-  .factory('RESTful', RESTful);
+  .service('RESTful', RESTful);
 
 })();
