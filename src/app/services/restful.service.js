@@ -1,15 +1,11 @@
 (() => {
 
-class RESTful {
-  constructor(API, $http, $q) {
-    this._url = API.url;
-    this._$http = $http;
-    this._$q = $q;
-  }
+let RESTful = (API, $http, $q) => ({
+  _url: API.url,
 
   // Getters and Setters
-  set url(url) { this._url = url; }
-  get url() { return this._url; }
+  set url(url) { this._url = url; },
+  get url() { return this._url; },
 
   // Methods
   _createUrl(endpoint, queryStrings) {
@@ -19,7 +15,7 @@ class RESTful {
       endpoint += jQuery.param(queryStrings);
     }
     return this._url + endpoint;
-  }
+  },
 
   /**
    * GET
@@ -28,13 +24,13 @@ class RESTful {
    * @return {Promise}
    */
   get(endpoint, queryStrings) {
-    let deferred = this._$q.defer();
+    let deferred = $q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
     }
 
-    this._$http.get(this._createUrl(endpoint, queryStrings))
+    $http.get(this._createUrl(endpoint, queryStrings))
       .success((response, status, headers, config) => {
         deferred.resolve(response);
       })
@@ -43,7 +39,7 @@ class RESTful {
       });
 
     return deferred.promise;
-  };
+  },
 
   /**
    * POST
@@ -53,7 +49,7 @@ class RESTful {
    * @return {Promise}
    */
   post(endpoint, payload, queryStrings) {
-    let deferred = this._$q.defer();
+    let deferred = $q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
@@ -63,7 +59,7 @@ class RESTful {
       payload = {};
     }
 
-    this._$http.post(this._createUrl(endpoint, queryStrings), payload)
+    $http.post(this._createUrl(endpoint, queryStrings), payload)
       .success((response, status, headers, config) => {
         deferred.resolve(response);
       })
@@ -72,7 +68,7 @@ class RESTful {
       });
 
     return deferred.promise;
-  };
+  },
 
   /**
    * PUT
@@ -82,7 +78,7 @@ class RESTful {
    * @return {Promise}
    */
   put(endpoint, payload, queryStrings) {
-    let deferred = this._$q.defer();
+    let deferred = $q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
@@ -92,7 +88,7 @@ class RESTful {
       payload = {};
     }
 
-    this._$http.put(this._createUrl(endpoint, queryStrings), payload)
+    $http.put(this._createUrl(endpoint, queryStrings), payload)
       .success((response, status, headers, config) => {
         deferred.resolve(response);
       })
@@ -101,7 +97,7 @@ class RESTful {
       });
 
     return deferred.promise;
-  };
+  },
 
   /**
    * DELETE
@@ -110,13 +106,13 @@ class RESTful {
    * @return {Promise}
    */
   delete(endpoint, queryStrings) {
-    let deferred = this._$q.defer();
+    let deferred = $q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
     }
 
-    this._$http.delete(this._createUrl(endpoint, queryStrings))
+    $http.delete(this._createUrl(endpoint, queryStrings))
       .success((response, status, headers, config) => {
         deferred.resolve(response);
       })
@@ -125,8 +121,8 @@ class RESTful {
       });
 
     return deferred.promise;
-  };
-}
+  },
+});
 
 angular.module('app')
   .factory('RESTful', RESTful);

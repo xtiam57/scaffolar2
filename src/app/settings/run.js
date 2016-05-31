@@ -14,7 +14,7 @@ angular.module('app')
     // Broadcasted after a route dependencies are resolved. ngView listens
     // for the directive to instantiate the controller and render the view.
     $rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-      // Setting page properties
+      // Updating page information
       PageService.get();
     });
 

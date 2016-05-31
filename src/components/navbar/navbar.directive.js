@@ -2,7 +2,7 @@
 
 let link = ($scope, element, attrs, api) => {
 
-}
+};
 
 angular.module('app')
   .directive('navbar', () => ({

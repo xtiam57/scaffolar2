@@ -1,20 +1,30 @@
 (() => {
 
-class CacheService {
-  constructor(CacheFactory, APP_INFO) {
+let CacheService = (CacheFactory, APP_INFO) => ({
+  // Local cache
+  _localCache: null,
+  // Session cache
+  _sessionCache: null,
+
+  _init() {
     let appName = APP_INFO.name.replace(/ /g, '-').toLowerCase(),
-        localName =  `${appName}.local-storage`,
-        sessionName = `${appName}.session-storage`;
+        localName =  `${this._appName}.local-storage`,
+        sessionName = `${this._appName}.session-storage`;
 
     // Local cache
-    this._localCache = CacheFactory.createCache(localName, { storageMode: 'localStorage' });
+    if (_.isNull(this._localCache)) {
+      this._localCache = CacheFactory.createCache(localName, { storageMode: 'localStorage' });
+    }
     // Session cache
-    this._sessionCache = CacheFactory.createCache(sessionName, { storageMode: 'sessionStorage' });
-  }
+    if (_.isNull(this._sessionCache)) {
+      this._sessionCache = CacheFactory.createCache(sessionName, { storageMode: 'sessionStorage' });
+    }
+  },
+
 
   _isSession(type) {
     return !_(type).isEmpty() && (type.toLowerCase() === 'session' || type.toLowerCase() === 's');
-  };
+  },
 
   /**
    * get
@@ -23,12 +33,14 @@ class CacheService {
    * @return {Object}
    */
   get(key, storageType) {
+    this._init();
+
     if (this._isSession(storageType)) {
       return this._sessionCache.get(key);
     }
 
     return this._localCache.get(key);
-  };
+  },
 
   /**
    * put
@@ -38,12 +50,14 @@ class CacheService {
    * @return {Object}
    */
   put(key, value, storageType) {
+    this._init();
+
     if (this._isSession(storageType)) {
       return this._sessionCache.put(key, value);
     }
 
     return this._localCache.put(key, value);
-  };
+  },
 
   /**
    * remove
@@ -52,24 +66,28 @@ class CacheService {
    * @return {Object}
    */
   remove(key, storageType) {
+    this._init();
+
     if (this._isSession(storageType)) {
       return this._sessionCache.remove(key);
     }
 
     return this._localCache.remove(key);
-  };
+  },
 
   /**
    * clear
    * @param  {Object} storageType
    */
   clear(storageType) {
+    this._init();
+
     if (this._isSession(storageType)) {
       this._sessionCache.removeAll();
     }
 
     this._localCache.removeAll();
-  };
+  },
 
   /**
    * info
@@ -77,13 +95,15 @@ class CacheService {
    * @return {Object}
    */
   info(storageType) {
+    this._init();
+
     if (this._isSession(storageType)) {
       return this._sessionCache.info();
     }
 
     return this._localCache.info();
-  };
-}
+  },
+});
 
 angular.module('app')
   .factory('CacheService', CacheService);

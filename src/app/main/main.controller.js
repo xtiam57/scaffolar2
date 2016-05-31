@@ -1,18 +1,17 @@
 (() => {
 
 class MainController {
-
   constructor(RESTful, CacheService, MainService) {
     this.RESTful = RESTful;
     this.greetings = MainService.greeting('Scaffolar');
 
     CacheService.put('myKey', 1999);
-    console.log(CacheService.info());
-  }
+    // console.log(CacheService.info());
+  };
 
   $onInit() {
     console.log('onInit controller');
-  }
+  };
 }
 
 angular.module('app')

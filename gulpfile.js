@@ -47,11 +47,9 @@ gulp.task('scripts', function() {
   return gulp.src('src/{app,components}/**/*.js')
     .pipe(plugins.plumber())
     .pipe(plugins.eslint())
-    // eslint.format() outputs the lint results to the console.
-    // Alternatively use eslint.formatEach() (see Docs).
     .pipe(plugins.eslint.format())
     .pipe(plugins.if(settings.isDevelopment, plugins.sourcemaps.init()))
-    .pipe(plugins.concat('app.js', {newLine:'\n;'}))
+    .pipe(plugins.concat('app.js', {newLine:';'}))
     .pipe(plugins.if(settings.isDistribution, plugins.babel()))
     .pipe(plugins.if(settings.isDistribution, plugins.ngAnnotate()))
     .pipe(plugins.if(settings.isDistribution, plugins.uglify({preserveComments:'some'})))
@@ -100,7 +98,7 @@ gulp.task('sass', function() {
 gulp.task('vendors', function() {
   return gulp.src('src/vendors/**/*.js')
     .pipe(plugins.plumber())
-    .pipe(plugins.concat('vendors.js', {newLine:'\n;'}))
+    .pipe(plugins.concat('vendors.js', {newLine:';'}))
     .pipe(plugins.if(settings.isDistribution, plugins.babel()))
     .pipe(plugins.if(settings.isDistribution, plugins.uglify({preserveComments:'some'})))
     .pipe(plugins.if(settings.isDistribution, plugins.rev()))

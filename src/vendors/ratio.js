@@ -971,14 +971,5 @@ var Ratio = (function() {
        */
     };
     return Ratio;
-  }
-  ());
-// Adds npm support
-if (typeof exports !== 'undefined') {
-  if (typeof module !== 'undefined' && module.exports) {
-    exports = module.exports = Ratio;
-  }
-  exports.Ratio = Ratio;
-} else {
-  this.Ratio = Ratio;
-}
+}());
+
