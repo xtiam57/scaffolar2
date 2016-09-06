@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 // Loading all the pluigins in package.json
 var plugins = require('gulp-load-plugins')({
-  pattern: ['gulp-*', 'main-bower-files', 'browser-sync', 'wiredep', 'del']
+  pattern: ['gulp-*', 'main-bower-files', 'browser-sync', 'wiredep', 'del', 'run-sequence']
 });
 
 // Settings
@@ -11,7 +11,6 @@ var settings = {
   get isDevelopment() { return this.env === 'dev'; },
   get isDistribution() { return this.env === 'dist'; },
 };
-
 
 
 // Connections
@@ -44,7 +43,7 @@ gulp.task('connect:build', function() {
 
 // Compile and concat all js files
 gulp.task('scripts', function() {
-  return gulp.src('src/{app,components}/**/*.js')
+  return gulp.src('src/{app,views}/**/*.js')
     .pipe(plugins.plumber())
     .pipe(plugins.eslint())
     .pipe(plugins.eslint.format())
@@ -67,7 +66,7 @@ gulp.task('scripts', function() {
 gulp.task('inject:sass', function() {
   return gulp.src('src/app/app.scss')
     .pipe(plugins.plumber())
-    .pipe(plugins.inject(gulp.src(['src/{app,components,styles}/**/*.scss', '!src/app/app.scss'], {read:false}), {
+    .pipe(plugins.inject(gulp.src(['src/{app,views,styles}/**/*.scss', '!src/app/app.scss'], {read:false}), {
       addRootSlash: false,
       relative: true,
       transform: function(path) {
@@ -112,7 +111,7 @@ gulp.task('vendors', function() {
 // Partials
 // Compile (tranform to JS) and concat all partials (html)
 gulp.task('partials', function() {
-  return gulp.src('src/{app,components}/**/*.html')
+  return gulp.src('src/{app,views}/**/*.html')
     .pipe(plugins.plumber())
     .pipe(plugins.htmlmin({removeComments:true, conservativeCollapse:true, collapseWhitespace:true}))
     .pipe(plugins.ngHtml2js({moduleName:'app'/*, prefix:'app/'*/}))
@@ -227,20 +226,20 @@ gulp.task('watch', function() {
   });
 
   // Scripts
-  plugins.watch(['src/{app,components}/**/*.js'], function() {
+  plugins.watch(['src/{app,views}/**/*.js'], function() {
     gulp.start('scripts');
   });
 
   // Sass
   var injectSass = function() { gulp.start('inject:sass'); };
 
-  plugins.watch(['src/{app,components,styles}/**/*.scss'])
+  plugins.watch(['src/{app,views,styles}/**/*.scss'])
     .on('change', function() { gulp.start('sass'); })
     .on('add', injectSass)
     .on('unlink', injectSass);
 
   // HTML
-  plugins.watch(['src/{app,components}/**/*.html', 'src/index.html'], plugins.browserSync.reload);
+  plugins.watch(['src/{app,views}/**/*.html', 'src/index.html'], plugins.browserSync.reload);
 
   // Assets
   plugins.watch(['src/assets/**/*'], function() {

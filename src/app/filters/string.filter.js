@@ -8,6 +8,7 @@
  *
  *     {{ name | s:'swapCase' }}
  *     {{ separator | s:'join':['foo', 'bar'] }}
+ *     {{ tab.title | s:'prune':[20] | available }}
  *
  * @param {String} s String to filter
  * @param {String} fn Underscore.string function to call
@@ -15,7 +16,7 @@
  * @return {String} Filtered string
  */
 angular.module('app')
-  .filter('str', () => {
+  .filter('s', () => {
     return (str, fn, params) => {
       str = str || '';
       params = params || [];
@@ -55,10 +56,24 @@ angular.module('app')
   // _.conditional(false, "Aja", "Nei")
   // => "Nei"
   .filter('conditional', () => {
-    return (input, positive, negative) => {
-      let t = positive || 'Yes',
+    return (input, positive, negative, compareTo = true) => {
+      let t = positive || 'Si',
           f = negative || 'No';
 
-      return input ? t : f;
+      return input === compareTo ? t : f;
+    };
+  })
+
+  // {{ value | type:{ a: 'Something', b: 'Other' } }}
+  // value = 'a' => Something
+  // value = 'b' => Other
+  // value = 'c' => c
+  .filter('type', () => {
+    return (input, types = {}) => {
+      if (_.isEmpty(types)) {
+        return input;
+      }
+
+      return _.has(types, input) ? types[input] : input;
     };
   });

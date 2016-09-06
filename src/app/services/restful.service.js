@@ -1,4 +1,4 @@
-(() => {
+;(() => {
 
 class RESTful {
   constructor(API, $http, $q) {
@@ -12,6 +12,16 @@ class RESTful {
   get url() { return this._url; }
 
   /**
+   * Create a response
+   * @param  {Object}  response
+   * @param  {Boolean} isHttpResponse
+   * @return {Object}
+   */
+  _createResponse(response, isHttpResponse) {
+    return isHttpResponse ? response : response.data;
+  }
+
+  /**
    * Create a valid url using the API constant
    * @param  {String} endpoint
    * @param  {Object} queryStrings
@@ -19,7 +29,7 @@ class RESTful {
    */
   _createUrl(endpoint, queryStrings) {
     // Has query strings?
-    if (queryStrings && !_.isEmpty(queryStrings)) {
+    if (!_.isEmpty(queryStrings) && _.isObject(queryStrings)) {
       endpoint += endpoint.indexOf('?') === -1 ? '?' : '&';
       endpoint += jQuery.param(queryStrings);
     }
@@ -30,21 +40,22 @@ class RESTful {
    * GET
    * @param  {String} url The endpoint
    * @param  {Object} queryStrings     Query strings
+   * @param  {Object} config
+   * @param  {Bool} isHttpResponse     direct http response ({ data, status, headers, config, statusText })
    * @return {Promise}
    */
-  get(endpoint, queryStrings) {
+  get(endpoint, queryStrings, config, isHttpResponse) {
     let deferred = this.$q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
     }
 
-    this.$http.get(this._createUrl(endpoint, queryStrings))
-      .success((response, status, headers, config) => {
-        deferred.resolve(response, status, headers, config);
-      })
-      .error((response, status, headers, config) => {
-        deferred.reject(response, status, headers, config);
+    this.$http.get(this._createUrl(endpoint, queryStrings), config)
+      .then((response) => {
+        deferred.resolve(this._createResponse(response, isHttpResponse));
+      }, (response) => {
+        deferred.reject(this._createResponse(response, isHttpResponse));
       });
 
     return deferred.promise;
@@ -55,9 +66,11 @@ class RESTful {
    * @param  {String} url The endpoint
    * @param  {Object} payload
    * @param  {Object} queryStrings     Query strings
+   * @param  {Object} config
+   * @param  {Bool} isHttpResponse     direct http response ({ data, status, headers, config, statusText })
    * @return {Promise}
    */
-  post(endpoint, payload, queryStrings) {
+  post(endpoint, payload, queryStrings, config, isHttpResponse) {
     let deferred = this.$q.defer();
 
     if (!_.isString(endpoint)) {
@@ -68,12 +81,11 @@ class RESTful {
       payload = {};
     }
 
-    this.$http.post(this._createUrl(endpoint, queryStrings), payload)
-      .success((response, status, headers, config) => {
-        deferred.resolve(response, status, headers, config);
-      })
-      .error((response, status, headers, config) => {
-        deferred.reject(response, status, headers, config);
+    this.$http.post(this._createUrl(endpoint, queryStrings), payload, config)
+      .then((response) => {
+        deferred.resolve(this._createResponse(response, isHttpResponse));
+      }, (response) => {
+        deferred.reject(this._createResponse(response, isHttpResponse));
       });
 
     return deferred.promise;
@@ -84,9 +96,11 @@ class RESTful {
    * @param  {String} url The endpoint
    * @param  {Object} payload
    * @param  {Object} queryStrings     Query strings
+   * @param  {Object} config
+   * @param  {Bool} isHttpResponse     direct http response ({ data, status, headers, config, statusText })
    * @return {Promise}
    */
-  put(endpoint, payload, queryStrings) {
+  put(endpoint, payload, queryStrings, config, isHttpResponse) {
     let deferred = this.$q.defer();
 
     if (!_.isString(endpoint)) {
@@ -97,12 +111,11 @@ class RESTful {
       payload = {};
     }
 
-    this.$http.put(this._createUrl(endpoint, queryStrings), payload)
-      .success((response, status, headers, config) => {
-        deferred.resolve(response, status, headers, config);
-      })
-      .error((response, status, headers, config) => {
-        deferred.reject(response, status, headers, config);
+    this.$http.put(this._createUrl(endpoint, queryStrings), payload, config)
+      .then((response) => {
+        deferred.resolve(this._createResponse(response, isHttpResponse));
+      }, (response) => {
+        deferred.reject(this._createResponse(response, isHttpResponse));
       });
 
     return deferred.promise;
@@ -112,21 +125,22 @@ class RESTful {
    * DELETE
    * @param  {String} url The endpoint
    * @param  {Object} queryStrings     Query strings
+   * @param  {Object} config
+   * @param  {Bool} isHttpResponse     direct http response ({ data, status, headers, config, statusText })
    * @return {Promise}
    */
-  delete(endpoint, queryStrings) {
+  delete(endpoint, queryStrings, config, isHttpResponse) {
     let deferred = this.$q.defer();
 
     if (!_.isString(endpoint)) {
       deferred.reject('"endpoint" isn\'t a string.');
     }
 
-    this.$http.delete(this._createUrl(endpoint, queryStrings))
-      .success((response, status, headers, config) => {
-        deferred.resolve(response, status, headers, config);
-      })
-      .error((response, status, headers, config) => {
-        deferred.reject(response, status, headers, config);
+    this.$http.delete(this._createUrl(endpoint, queryStrings), config)
+      .then((response) => {
+        deferred.resolve(this._createResponse(response, isHttpResponse));
+      }, (response) => {
+        deferred.reject(this._createResponse(response, isHttpResponse));
       });
 
     return deferred.promise;

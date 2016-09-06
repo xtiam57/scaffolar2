@@ -2,8 +2,10 @@
 /* inject:scss */
 @import '../styles/bootstrap-override';
 @import '../styles/_scaffolding';
-@import 'main/_main';
-@import '../components/navbar/_navbar';
+@import '../styles/_scrollbars';
+@import '../styles/_utilities';
+@import '../views/main/_main';
+@import 'directives/navbar/_navbar';
 /* endinject */
 
 

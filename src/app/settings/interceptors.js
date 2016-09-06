@@ -1,8 +1,12 @@
 angular.module('app')
   .config(($httpProvider) => {
-    $httpProvider.interceptors.push(['$q', '$location', ($q, $location) => {
+    $httpProvider.interceptors.push(['$q', '$location', '$injector', ($q, $location, $injector) => {
       return {
         request: (config) => {
+          let Auth = $injector.get('Auth');
+
+          config.headers['X-Auth-Token'] = Auth.getToken();
+
           return config || $q.when(config);
         },
 

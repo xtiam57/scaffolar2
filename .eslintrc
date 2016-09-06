@@ -21,6 +21,9 @@
     "Ratio": true,
     "performance": true,
     "s": true,
+    "FormData": true,
+    "FileReader": true,
+    "BaseFactory": true
   },
   "rules": {
     "quotes": [1, "single"],
@@ -36,7 +39,7 @@
       "nonwords": false
     }],
     "arrow-parens": [1, "always"],
-    "newline-after-var": 1,
+    // "newline-after-var": 1,
     "keyword-spacing": 1,
   }
 }

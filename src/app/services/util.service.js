@@ -1,5 +1,5 @@
 angular.module('app')
-  .factory('DateUtil', ($filter) => ({
+  .service('DateUtil', ($filter) => ({
     isSame(date1, date2) {
       date1 = moment($filter('date')(date1, 'yyyy-MM-dd'));
       date2 = moment($filter('date')(date2, 'yyyy-MM-dd'));
@@ -27,7 +27,7 @@ angular.module('app')
   }))
 
 
-  .factory('TimeUtil', ($filter) => ({
+  .service('TimeUtil', ($filter) => ({
     getDuration(date1, date2, period) {
       return Math.round(moment(date1).diff(moment(date2), period, true) * 100000) / 100000;
     },
@@ -72,7 +72,7 @@ angular.module('app')
   }))
 
 
-  .factory('StringUtil', ($filter) => ({
+  .service('StringUtil', ($filter) => ({
     getGUID() {
       let d = new Date().getTime();
 
@@ -91,7 +91,7 @@ angular.module('app')
   }))
 
 
-  .factory('NumericUtil', ($filter) => ({
+  .service('NumericUtil', ($filter) => ({
     round(value, decimals) {
       return parseFloat($filter('number')(value, decimals));
     },
@@ -108,7 +108,7 @@ angular.module('app')
   }))
 
 
-  .factory('ArrayUtil', ($filter) => ({
+  .service('ArrayUtil', ($filter) => ({
 
   }));
 

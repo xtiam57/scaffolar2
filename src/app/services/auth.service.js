@@ -2,6 +2,7 @@
 
 class Auth {
   constructor(RESTful, $q, $timeout) {
+    this.RESTful = RESTful;
     this.$q = $q;
     this.$timeout = $timeout;
   }

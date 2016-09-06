@@ -6,7 +6,7 @@ let link = ($scope, element, attrs, api) => {
 
 angular.module('app')
   .directive('navbar', () => ({
-    templateUrl: 'components/navbar/navbar.html',
+    templateUrl: 'app/directives/navbar/navbar.html',
     restrict: 'E',
     controller: 'NavbarController',
     link: link,
