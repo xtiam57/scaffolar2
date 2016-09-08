@@ -8,3 +8,18 @@ angular.module('app')
       });
     }
   }));
+
+
+angular.module('app')
+  .factory('SOme', () => {
+
+    class SOme extends BaseFactory {
+      constructor(name, lastname) {
+        super(name, lastname);
+      }
+
+      // methods
+    };
+
+    return SOme;
+  });

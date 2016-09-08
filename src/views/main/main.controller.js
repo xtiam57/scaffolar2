@@ -12,13 +12,16 @@ class MainController {
   $onInit() {
     console.log('onInit controller');
   };
+
+  something() {
+    console.log('Hello world!');
+  }
 }
 
 angular.module('app')
   .component('main', {
     templateUrl: 'views/main/main.html',
     controller: MainController,
-    controllerAs: 'main',
   });
 
 })();

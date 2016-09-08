@@ -88,6 +88,9 @@ angular.module('app')
 
       return uuid;
     },
+    lorempixel(width = 200, height = 200) {
+      return `http://lorempixel.com/${width}/${height}/`;
+    },
   }))
 
 
@@ -99,8 +102,10 @@ angular.module('app')
     * Returns a random integer between min (inclusive) and max (inclusive)
     * Using Math.round() will give you a non-uniform distribution!
     */
-    random(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    random(min, max, isInteger = true) {
+      return isInteger ?
+                Math.floor(Math.random() * (max - min + 1)) + min :
+                (Math.random() * (max - min + 1)) + min;
     },
     toFraction(value) {
       return isNaN(value) ? value : Ratio.parse(value).simplify().toQuantityOf(2, 3, 4, 5, 8, 16, 32, 40).toLocaleString();

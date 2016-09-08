@@ -1,7 +1,12 @@
 class BaseFactory {
   constructor(data) {
-    for (let [key, value] of Object.entries(data)) {
-      this[key] = value;
+    // for (let [key, value] of Object.entries(data)) {
+    //   this[key] = value;
+    // }
+    for (let key in data) {
+      if (data.hasOwnProperty(key)) {
+         this[key] = data[key];
+      }
     }
   }
 

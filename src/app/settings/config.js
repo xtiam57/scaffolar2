@@ -1,5 +1,5 @@
 angular.module('app')
-  .config(($logProvider, $locationProvider, $provide) => {
+  .config(($logProvider, $locationProvider, $provide, IndexedDBProvider) => {
     // Log configuration
     $logProvider.debugEnabled(true);
 
@@ -14,6 +14,9 @@ angular.module('app')
 
     // Setting this property to true will elimate the # from all URLs
     $locationProvider.html5Mode(false);
+
+    // Setting our DB name
+    IndexedDBProvider.connect('myDB');
 
     // Scrolling page to the very top no matter what
     $provide.decorator('$uiViewScroll', ($delegate) => {
