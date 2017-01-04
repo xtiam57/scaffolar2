@@ -1,12 +1,3 @@
-// Component styles are injected through gulp
-/* inject:scss */
-@import '../styles/bootstrap-override';
-@import '../styles/_scaffolding';
-@import '../styles/_scrollbars';
-@import '../styles/_utilities';
-@import '../views/main/_main';
-@import 'directives/navbar/_navbar';
-/* endinject */
-
+@import 'container';
 
 // Specific app styles

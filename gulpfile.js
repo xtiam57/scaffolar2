@@ -60,13 +60,22 @@ gulp.task('scripts', function() {
     .pipe(plugins.browserSync.stream());
 });
 
+// Sass
+// Create the injection file
+gulp.task('sass:container', function() {
+  var str = '// Component styles are injected through gulp\n/* inject:scss */\n/* endinject */';
+
+  return plugins.file('src/app/container.scss', str, {src:true})
+    .pipe(plugins.plumber())
+    .pipe(gulp.dest('.'));
+});
 
 // Sass
 // Inject all sass files into app.scss
 gulp.task('inject:sass', function() {
-  return gulp.src('src/app/app.scss')
+  return gulp.src('src/app/container.scss')
     .pipe(plugins.plumber())
-    .pipe(plugins.inject(gulp.src(['src/{app,views,styles}/**/*.scss', '!src/app/app.scss'], {read:false}), {
+    .pipe(plugins.inject(gulp.src(['src/{app,views,styles}/**/*.scss', '!src/app/app.scss', '!src/app/container.scss'], {read:false}), {
       addRootSlash: false,
       relative: true,
       transform: function(path) {
@@ -77,7 +86,7 @@ gulp.task('inject:sass', function() {
 });
 
 // Compile the main sass file
-gulp.task('sass', function() {
+gulp.task('sass', ['inject:sass'], function() {
   return gulp.src('src/app/app.scss')
     .pipe(plugins.plumber())
     .pipe(plugins.sass({precision:6, outputStyle:'nested', sourceComments:true}).on('error', plugins.sass.logError))
@@ -231,12 +240,12 @@ gulp.task('watch', function() {
   });
 
   // Sass
-  var injectSass = function() { gulp.start('inject:sass'); };
+  var sass = function() { gulp.start('sass'); };
 
   plugins.watch(['src/{app,views,styles}/**/*.scss'])
-    .on('change', function() { gulp.start('sass'); })
-    .on('add', injectSass)
-    .on('unlink', injectSass);
+    .on('change', sass)
+    .on('add', sass)
+    .on('unlink', sass);
 
   // HTML
   plugins.watch(['src/{app,views}/**/*.html', 'src/index.html'], plugins.browserSync.reload);
@@ -270,7 +279,7 @@ gulp.task('clean:revisions', function() {
 // Task for development
 gulp.task('default', function() {
   settings.env = 'dev';
-  plugins.runSequence('clean', 'bower-install', 'inject:sass', ['vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower'], 'connect:development', 'watch');
+  plugins.runSequence('clean', 'bower-install', 'sass:container', ['vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower'], 'connect:development', 'watch');
 });
 
 // Run development mode
@@ -281,11 +290,11 @@ gulp.task('serve', ['default']);
 // For distribution
 gulp.task('build', function() {
   settings.env = 'dist';
-  plugins.runSequence('clean', 'bower-install', 'inject:sass', 'vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower', 'move-index', 'useref', 'inject:partials', 'inject:revisions', 'clean:revisions', function() { settings.env = 'dev'; });
+  plugins.runSequence('clean', 'bower-install', 'sass:container', 'vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower', 'move-index', 'useref', 'inject:partials', 'inject:revisions', 'clean:revisions', function() { settings.env = 'dev'; });
 });
 
 // Run distribution mode
 gulp.task('build:serve', function() {
   settings.env = 'dist';
-  plugins.runSequence('clean', 'bower-install', 'inject:sass', 'vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower', 'move-index', 'useref', 'inject:partials', 'inject:revisions', 'clean:revisions', 'connect:build', function() { settings.env = 'dev'; });
+  plugins.runSequence('clean', 'bower-install', 'sass:container', 'vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower', 'move-index', 'useref', 'inject:partials', 'inject:revisions', 'clean:revisions', 'connect:build', function() { settings.env = 'dev'; });
 });

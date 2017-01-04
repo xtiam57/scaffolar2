@@ -21,9 +21,11 @@
     "Ratio": true,
     "performance": true,
     "s": true,
+    "Blob": true,
     "FormData": true,
     "FileReader": true,
-    "BaseFactory": true
+    "BaseFactory": true,
+    "switch": true
   },
   "rules": {
     "quotes": [1, "single"],
