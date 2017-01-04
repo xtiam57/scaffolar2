@@ -5,4 +5,5 @@ angular.module('app', [
   'angular-cache',
   'ui.router',
   'ui.bootstrap',
+  'cgBusy',
 ]);

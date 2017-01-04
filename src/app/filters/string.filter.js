@@ -69,7 +69,7 @@ angular.module('app')
   // value = 'b' => Other
   // value = 'c' => c
   .filter('type', () => {
-    return (input, types = {}) => {
+    return (input, types) => {
       if (_.isEmpty(types)) {
         return input;
       }

@@ -4,7 +4,6 @@ angular.module('app')
       return {
         request: (config) => {
           let Auth = $injector.get('Auth');
-
           config.headers['X-Auth-Token'] = Auth.getToken();
 
           return config || $q.when(config);
