@@ -1,12 +1,17 @@
-(() => {
+;(() => {
 
-let MainService = () => ({
+class MainService {
+  constructor() {
+
+  }
+
+  // methods
   greeting(name = 'world') {
     return `Hello ${name}!`;
-  },
-});
+  }
+};
 
 angular.module('app')
-  .factory('MainService', MainService);
+  .service('MainService', MainService);
 
 })();

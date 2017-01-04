@@ -6,7 +6,7 @@ class MainController {
     this.greetings = MainService.greeting('Scaffolar');
 
     StorageService.put('myKey', 1999);
-    // console.log(StorageService.info());
+    console.log(StorageService.info());
   };
 
   $onInit() {
