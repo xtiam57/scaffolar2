@@ -62,10 +62,10 @@ gulp.task('scripts', function() {
 
 // Sass
 // Create the injection file
-gulp.task('sass:container', function() {
+gulp.task('sass:includes', function() {
   var str = '// Component styles are injected through gulp\n/* inject:scss */\n/* endinject */';
 
-  return plugins.file('src/app/container.scss', str, {src:true})
+  return plugins.file('src/app/_includes.scss', str, {src:true})
     .pipe(plugins.plumber())
     .pipe(gulp.dest('.'));
 });
@@ -73,9 +73,9 @@ gulp.task('sass:container', function() {
 // Sass
 // Inject all sass files into app.scss
 gulp.task('inject:sass', function() {
-  return gulp.src('src/app/container.scss')
+  return gulp.src('src/app/_includes.scss')
     .pipe(plugins.plumber())
-    .pipe(plugins.inject(gulp.src(['src/{app,views,styles}/**/*.scss', '!src/app/app.scss', '!src/app/container.scss'], {read:false}), {
+    .pipe(plugins.inject(gulp.src(['src/{app,views,styles}/**/*.scss', '!src/app/app.scss', '!src/app/_includes.scss'], {read:false}), {
       addRootSlash: false,
       relative: true,
       transform: function(path) {
@@ -279,7 +279,7 @@ gulp.task('clean:revisions', function() {
 // Task for development
 gulp.task('default', function() {
   settings.env = 'dev';
-  plugins.runSequence('clean', 'bower-install', 'sass:container', ['vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower'], 'connect:development', 'watch');
+  plugins.runSequence('clean', 'bower-install', 'sass:includes', ['vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower'], 'connect:development', 'watch');
 });
 
 // Run development mode
@@ -290,11 +290,11 @@ gulp.task('serve', ['default']);
 // For distribution
 gulp.task('build', function() {
   settings.env = 'dist';
-  plugins.runSequence('clean', 'bower-install', 'sass:container', 'vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower', 'move-index', 'useref', 'inject:partials', 'inject:revisions', 'clean:revisions', function() { settings.env = 'dev'; });
+  plugins.runSequence('clean', 'bower-install', 'sass:includes', 'vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower', 'move-index', 'useref', 'inject:partials', 'inject:revisions', 'clean:revisions', function() { settings.env = 'dev'; });
 });
 
 // Run distribution mode
 gulp.task('build:serve', function() {
   settings.env = 'dist';
-  plugins.runSequence('clean', 'bower-install', 'sass:container', 'vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower', 'move-index', 'useref', 'inject:partials', 'inject:revisions', 'clean:revisions', 'connect:build', function() { settings.env = 'dev'; });
+  plugins.runSequence('clean', 'bower-install', 'sass:includes', 'vendors', 'scripts', 'sass', 'assets', 'bower-fonts', 'inject:bower', 'move-index', 'useref', 'inject:partials', 'inject:revisions', 'clean:revisions', 'connect:build', function() { settings.env = 'dev'; });
 });

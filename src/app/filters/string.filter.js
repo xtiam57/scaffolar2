@@ -64,6 +64,14 @@ angular.module('app')
     };
   })
 
+  //  fraction(3.5)
+  //  => 3 1/2
+  .filter('fraction', () => {
+    return (value) => {
+      return Ratio.parse(value).simplify().toQuantityOf(2, 3, 4, 5, 8, 16, 32, 40).toLocaleString();
+    };
+  })
+
   // {{ value | type:{ a: 'Something', b: 'Other' } }}
   // value = 'a' => Something
   // value = 'b' => Other

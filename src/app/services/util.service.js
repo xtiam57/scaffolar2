@@ -114,7 +114,7 @@ angular.module('app')
         return Math.floor(Math.random() * (max - min + 1)) + min;
       },
       toFraction(value) {
-        return isNaN(value) ? value : Ratio.parse(value).simplify().toQuantityOf(2, 3, 4, 5, 8, 16, 32, 40).toLocaleString();
+        return isNaN(value) ? value : $filter('fraction')(value);
       },
     };
   })

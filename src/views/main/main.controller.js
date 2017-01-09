@@ -1,9 +1,11 @@
 (() => {
 
 class MainController {
-  constructor(RESTful, StorageService, MainService) {
+  constructor(RESTful, StorageService, MainService, toastr) {
     this.RESTful = RESTful;
     this.greetings = MainService.greeting('Scaffolar');
+
+    toastr.success('Hello world!', 'Toastr fun!');
 
     StorageService.put('myKey', 1999);
     console.log(StorageService.info());

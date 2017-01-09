@@ -6,4 +6,5 @@ angular.module('app', [
   'ui.router',
   'ui.bootstrap',
   'cgBusy',
+  'toastr',
 ]);
